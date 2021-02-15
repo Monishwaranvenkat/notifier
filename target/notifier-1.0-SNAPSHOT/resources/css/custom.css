@@ -1,0 +1,22 @@
+/* your styles go here */
+.card{
+    color: #FFFF;
+}
+.card a{
+    color: #ffff;
+}
+
+.button-add
+{
+    background-color: #32badc;
+    border-color: #07c8f8;
+}
+.button-add:hover{
+    background-color: #0a9dc2;
+    border-color: #07b1db;
+}
+
+label.error {
+	color: #dc3545;
+	margin-bottom: 0;
+}
