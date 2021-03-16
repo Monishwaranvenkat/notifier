@@ -29,7 +29,7 @@ public class NoteBookDAO {
 	}
 	
 	
-	public void updateNoteBook(Integer id, String notebookName) {
+	public void updateNoteBook(Integer id, String notebookName,String notebookDescription) {
 		
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -39,6 +39,7 @@ public class NoteBookDAO {
 		 session.beginTransaction();
 		 NoteBook noteBook = (NoteBook) session.get(NoteBook.class, id);
 		 noteBook.setNoteBookName(notebookName);
+		 noteBook.setNoteBookDescription(notebookDescription);
 		 session.update(noteBook);
 		 session.getTransaction().commit();
 		 
@@ -59,15 +60,13 @@ public class NoteBookDAO {
 		 List<NoteBook> list=null;
 		try
 		{
-		// session.beginTransaction();
+		 session.beginTransaction();
 		 Criteria criteria=session.createCriteria(NoteBook.class);
 		 criteria.add(Restrictions.eq("user", user));
 		  list = criteria.list();
-		// session.getTransaction().commit();
-		 
+		  
 		}catch (HibernateException e) {
 			
-	        // if (session.getTransaction()!=null) session.getTransaction().rollback();
 	         e.printStackTrace(); 
 	         
 	      } finally {
@@ -76,6 +75,53 @@ public class NoteBookDAO {
 		
 		return list;	
 	}
+	
+	
+	public void deleteNoteBook(NoteBook noteBook) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		try {
+			session.beginTransaction();
+			session.delete(noteBook);	
+			session.getTransaction().commit();
+		}catch (HibernateException e) {
+   
+	         e.printStackTrace(); 
+	         
+	      } finally {
+	         session.close(); 
+	      }
+		
+	}
+	
+	
+	public NoteBook getNoteBookObject(Integer id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try
+		{
+		 session.beginTransaction();
+		 Criteria criteria=session.createCriteria(NoteBook.class);
+		 criteria.add(Restrictions.eq("id", id));
+		 return (NoteBook) criteria.uniqueResult();
+
+		}catch (HibernateException e) {
+			
+	         e.printStackTrace(); 
+	         
+	      } finally {
+	         session.close(); 
+	      }
+		return null;
+		
+		
+		
+	}
+
+	public int add(int a,int b)
+	{
+		return a+b;
+	}
+	
 	
 	
 

@@ -24,11 +24,22 @@ public class NoteBook implements Serializable {
 	      private Integer id;
 		@Column(name = "noteBookName")
 	      private String noteBookName;
+		@Column(name="noteBookDescription")
+		private String noteBookDescription;
 		@ManyToOne
 		 @ForeignKey(name = "user")
 		  private User user;
+		
 	public NoteBook(){
 		
+	}
+	
+	public String getNoteBookDescription() {
+		return noteBookDescription;
+	}
+	
+	public void setNoteBookDescription(String noteBookDescription) {
+		this.noteBookDescription = noteBookDescription;
 	}
 	public NoteBook(String noteBookName,User user)
 	{
@@ -39,6 +50,14 @@ public class NoteBook implements Serializable {
 		this.id = id;
 		this.noteBookName = noteBookName;
 		this.user=user;
+	}
+
+	public NoteBook(Integer id, String noteBookName, String noteBookDescription, User user) {
+		super();
+		this.id = id;
+		this.noteBookName = noteBookName;
+		this.noteBookDescription = noteBookDescription;
+		this.user = user;
 	}
 
 	public Integer getId() {

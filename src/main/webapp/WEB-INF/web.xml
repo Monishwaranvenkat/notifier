@@ -6,7 +6,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     
 	<welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
  </welcome-file-list>
 
 
@@ -17,7 +17,7 @@
     
     <servlet>
         <servlet-name>SignupServlet</servlet-name>
-        <jsp-file>/signup.jsp</jsp-file>
+         <servlet-class> com.example.demo.servlet.LoginServlet</servlet-class>
     </servlet>
     <!--mapping-->
     <servlet-mapping>
@@ -35,41 +35,135 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     
-    
+       <!--logout-->
       <servlet>
         <servlet-name>logoutServlet</servlet-name>
          <servlet-class> com.example.demo.servlet.LogoutServlet</servlet-class>
     </servlet>
-    <!--mapping-->
     <servlet-mapping>
         <servlet-name>logoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     
-    
+      <!--notebook-->
         <servlet>
         <servlet-name>notebookServlet</servlet-name>
          <servlet-class> com.example.demo.servlet.NoteBookServlet</servlet-class>
     </servlet>
-    <!--mapping-->
+    
+  
     <servlet-mapping>
         <servlet-name>notebookServlet</servlet-name>
         <url-pattern>/notebook</url-pattern>
     </servlet-mapping>
     
+     <!--add notebook-->
+        <servlet>
+        <servlet-name>addnotebookServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.AddNotebookServlet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>addnotebookServlet</servlet-name>
+        <url-pattern>/addnotebook</url-pattern>
+    </servlet-mapping>
+    
+     
+     <!--delete notebook-->
+        <servlet>
+        <servlet-name>deletenotebookServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.DeleteNoteBookSevelet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>deletenotebookServlet</servlet-name>
+        <url-pattern>/deletenotebook</url-pattern>
+    </servlet-mapping>
+    
+    <!--update notebook-->
+        <servlet>
+        <servlet-name>editnotebookServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.UpdateNoteBookServlet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>editnotebookServlet</servlet-name>
+        <url-pattern>/editnotebook</url-pattern>
+    </servlet-mapping>
+    
+     <!--note-->
+    
+           <servlet>
+        <servlet-name>noteServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.NoteServlet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>noteServlet</servlet-name>
+        <url-pattern>/note</url-pattern>
+    </servlet-mapping>
     
     
-    <servlet>
-   <servlet-name>test</servlet-name>
-   <servlet-class>com.example.demo.App</servlet-class>
-</servlet>
+     
+     <!--add note-->
+    
+           <servlet>
+        <servlet-name>addnoteServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.AddNoteServlet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>addnoteServlet</servlet-name>
+        <url-pattern>/addnote</url-pattern>
+    </servlet-mapping>
+    
+    
+    <!--view note-->
+    
+           <servlet>
+        <servlet-name>viewnoteServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.ViewNoteSevlet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>viewnoteServlet</servlet-name>
+        <url-pattern>/viewnote</url-pattern>
+    </servlet-mapping>
+    
+     <!--edit note-->
+    
+           <servlet>
+        <servlet-name>editnoteServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.UpdateNoteServlet</servlet-class>
+    </servlet>
+    
 
-<servlet-mapping>
-   <servlet-name>test</servlet-name>
-   <url-pattern>/testhb</url-pattern>
-</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editnoteServlet</servlet-name>
+        <url-pattern>/editnote</url-pattern>
+    </servlet-mapping>
     
+
+   
     
+    <!--delete note-->
+    
+           <servlet>
+        <servlet-name>deletenoteServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.DeleteNoteServlet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>deletenoteServlet</servlet-name>
+        <url-pattern>/deletenote</url-pattern>
+    </servlet-mapping>
     
     
     

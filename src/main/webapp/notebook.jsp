@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
-   <%@page import="com.example.demo.model.*"%>
+<%@page import="com.example.demo.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -115,9 +115,9 @@ if(session.getAttribute("userobj")==null){
       </div>
       <!-- Sidebar Navidation Menus-->
       <ul class="list-unstyled">
-        <li class="active"><a href="index.html"> <i class="fa fa-book"></i>NOTE BOOKS </a></li>
-        <li><a href="tables.html"> <i class="fa fa-sticky-note"></i>NOTES </a></li>
-        <li><a href="charts.html"> <i class="fas fa-user-edit"></i>EDIT USER </a></li>
+        <li class="active"><a href="/notebook"> <i class="fa fa-book"></i>NOTE BOOKS </a></li>
+        <li ><a href="/allnotes"> <i class="fa fa-sticky-note"></i>NOTES </a></li>
+        <li><a href="/edituser"> <i class="fas fa-user-edit"></i>EDIT USER </a></li>
       </ul>
 
     </nav>
@@ -135,7 +135,7 @@ if(session.getAttribute("userobj")==null){
           </div>
           <div class="right-menu list-inline no-margin-bottom">
             <div class="list-inline-item">
-              <button type="button" data-toggle="addNotebook" data-target="#addNotebook" class="btn button-add">
+              <button type="button" data-toggle="modal" data-target="#addNotebook" class="btn button-add">
                 <i class="fas fa-plus-square"></i> Add NoteBook</button>
             </div>
           </div>
@@ -156,23 +156,26 @@ if(session.getAttribute("userobj")==null){
             </div>
             
             
-            <form >
+            <form action="/addnotebook" id="addNotebook" name="addNotebook" method="POST">
             <div class="modal-body">
 
 
                 <div class="form-group">
-                  <label>NOTE BOOK NAME</label>
-                  <input type="text" placeholder="Enter notebook name" class="form-control">
+                  <label for="notebookName" >NOTE BOOK NAME</label>                      
+                  <input type="text" placeholder="Enter notebook name" id="notebookName" name="notebookName" class="form-control">
+                   <span><label id="notebookName-error" class="error" for="notebookName"></label></span>
+                   
                 </div>
                 <div class="form-group">
-                  <label>Description</label>
-                  <input type="password" placeholder="Enter description about notebook" class="form-control">
+                  <label for="notebookDescription">Description</label>
+                  <input type="text" placeholder="Enter description about notebook" id="notebookDescription" name="notebookDescription" class="form-control">
+                <span><label id="notebookDescription-error" class="error" for="notebookDescription"></label></span>
                 </div>
 
             </div>
             <div class="modal-footer">
               <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
-              <button type="button" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary">Save</button>
             </div>
             </form>
             
@@ -189,83 +192,140 @@ if(session.getAttribute("userobj")==null){
 
 
       <div class="col-lg-12 " id="notebook">
-
-        <div class="card notebookRow" id="1">
-          <div class="card-header" style="background-color:#676be6; ">
-            <div class="row">
-              <div class="col-10" id="cardname">NOTE BOOK-1</div>
-              <div class="col-1"> <a href="#"><i class="fas fa-trash-alt"></i> </a> </div>
-              <div class="col-1"> <a href="#"><i class="fas fa-pencil-alt"></i> </a> </div>
+      
+      
+		     <c:forEach items="${NoteBookList}" var="item">
+		     	  <div class="card notebookRow" id="${item.key.getId()}">
+		          <div class="card-header" style="background-color:#676be6; ">
+		            <div class="row">
+		              <div class="col-10" id="cardname"><a href="note?notebookId=${item.key.getId()}">${item.key.getNoteBookName()}</a></div>
+		              <div class="col-1"> <a href="/deletenotebook?notebookId=${item.key.getId()}"><i class="fas fa-trash-alt"></i> </a> </div>
+		              <div class="col-1"> <a href="#"  data-toggle="modal" data-target="#editNotebook${item.key.getId()}">
+		              
+		              <i class="fas fa-pencil-alt"></i> </a> </div>
+		            </div>
+		
+		          </div>
+		          <div class="card-body">
+		            <h6 class="card-titlet">${item.key.getNoteBookDescription()}</h6>
+		            <p class="card-text">no of notes => <c:out value="${item.value} Notes" /></p>
+		
+		          </div>
+		        </div>
+		     	
+		     	
+		<div id="editNotebook${item.key.getId()}" tabindex="-1" role="dialog" aria-labelledby="editNotebookLabel" aria-hidden="true"
+        class="modal fade text-left">
+        <div role="document" class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header"><strong id="editNotebook" class="modal-title">Edit NOTEBOOK</strong>
+              <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                  aria-hidden="true">x</span></button>
             </div>
+            
+            
+            <form action="/editnotebook" id="editNotebook" name="editNotebook" method="POST">
+            <div class="modal-body">
+					
+				 <div class="form-group">
+                  <label for="notebookName" ></label>                      
+                                     
+                  <input type="hidden"  id="notebookId" name="notebookId" value="${item.key.getId()}" class="form-control">
+                </div>
+                
+                
+                
 
-          </div>
-          <div class="card-body">
-            <h6 class="card-titlet">description about note book 1</h6>
-            <p class="card-text">no of notes => 1</p>
+                <div class="form-group">
+                  <label for="notebookName" >NOTE BOOK NAME</label>                      
+                  <input type="text" placeholder="Enter notebook name" id="notebookName" name="notebookName" value="${item.key.getNoteBookName()}" class="form-control">
+                   <span><label id="notebookName-error" class="error" for="notebookName"></label></span>
+                   
+                </div>
+                <div class="form-group">
+                  <label for="notebookDescription">Description</label>
+                  <input type="text" placeholder="Enter description about notebook" id="notebookDescription" name="notebookDescription" value="${item.key.getNoteBookDescription()}" class="form-control">
+                <span><label id="notebookDescription-error" class="error" for="notebookDescription"></label></span>
+                </div>
 
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            </form>
+            
           </div>
         </div>
+      </div>
+      
+      
+		     </c:forEach>
 
-
-        <div class=" card notebookRow" id="2">
-          <div class="card-header" style="background-color:#676be6; ">
-
-            <div class="row">
-              <div class="col-10" id="cardname">NOTE BOOK-2</div>
-              <div class="col-1"> <a href="#"><i class="fas fa-trash-alt"></i> </a> </div>
-              <div class="col-1"> <a href="#"><i class="fas fa-pencil-alt"></i> </a> </div>
-            </div>
-
-
-
-          </div>
-          <div class="card-body">
-            <h6 class="card-titlet">description about note book 1</h6>
-            <p class="card-text">no of notes => 1</p>
-
-          </div>
-        </div>
-
-
-        <div class=" card notebookRow">
-          <div class="card-header" style="background-color:#676be6; ">
-
-            <div class="row">
-              <div class="col-10" id="cardname">lOTE BOOK-2</div>
-              <div class="col-1"> <a href="#"><i class="fas fa-trash-alt"></i> </a> </div>
-              <div class="col-1"> <a href="#"><i class="fas fa-pencil-alt"></i> </a> </div>
-            </div>
-
-
-
-          </div>
-          <div class="card-body">
-            <h6 class="card-titlet">description about note book 1</h6>
-            <p class="card-text">no of notes => 1</p>
-
-          </div>
-        </div>
 
       </div>
 
       <!-- end Notebook-->
+      
+      <!-- Modal for edit notebook -->
+         
 
 
     </div>
     <!--end main page content-->
   </div>
+
+  
   <!-- JavaScript files-->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/popper.js/umd/popper.min.js"> </script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery.cookie/jquery.cookie.js"> </script>
-
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery-validation/jquery.validate.min.js"></script>
-
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/front.js"></script>
-  
-  
+    <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="${pageContext.request.contextPath}/resources/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/front.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
+    
   <script>
+  
+  
+  
+  $(function() {
+	  
+	  
+      $("form[name='editNotebook']").validate({
+        
+      	  rules: {
+      		     
+      		  notebookName:{required:true,minlength:2},
+      		  notebookDescription:{required:true,minlength:2},        	       
+
+              },
+              messages: {
+              	notebookName: {minlength:"Notebook name must be greater than two digit",required:"Please enter notebook name"},
+              	notebookDescription: {minlength:"Notebook Description must be greater than two digit",required:"Please enter notebook name"},
+
+              }   
+      });
+      
+      
+      $("form[name='addNotebook']").validate({
+          
+      	  rules: {
+      		     
+      		  notebookName:{required:true,minlength:2},
+      		  notebookDescription:{required:true,minlength:2},        	       
+
+              },
+              messages: {
+              	notebookName: {minlength:"Notebook name must be greater than two digit",required:"Please enter notebook name"},
+              	notebookDescription: {minlength:"Notebook Description must be greater than two digit",required:"Please enter notebook name"},
+
+              }   
+      });
+      
+ 
+      
+    });
 
 
     function searchNote() {
@@ -293,6 +353,8 @@ if(session.getAttribute("userobj")==null){
     }
 
   </script>
+ 
+       
 </body>
 
 </html>

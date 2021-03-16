@@ -53,7 +53,7 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <form id="signupform" name="signupform" class="text-left ">
+                  <form id="signupform" name="signupform" action="/signup" class="text-left ">
                   	 <div class="form-group">
                       <input id="username" type="text" name="username" class="input-material">
                       <label for="username" class="label-material">Username</label>
@@ -107,30 +107,36 @@
      <script>
       
 
-        $("form[name='signupform']").validate({
-          
-          rules: {
-            email: {required:true,email:true},     
-	        username:{required:true,minlength:2,maxlength:15},
-	        password:{required:true,minlength:8,maxlength:15,pswcheck:true},
-	        phone:{required:true,phoneInd:true},
-	        confirmPassword:{required:true,equalTo: "#password"}
-          
-          
-          },
-          messages: {
-        	  
-        	  
-            email: {required:"Please enter your email",email:"Please enter vaild email"},
-             password: {required:"please enter your password",pswcheck:"minmum 1 lowercase,1 uppercase,1 special character,1 digit",
-            	 minlength:"minimum password lenght must be 8",maxlength:"maximum password length must be 15"},
-           	username: {minlength:"username must be greater than two digit",required:"Please enter your username"},
-           	confirmPassword:{required:"Please enter confirm password",equalTo:"Password did'nt match"},
-           	phone:{required:"please enter phone number",phoneInd:"Enter valid phone number"}
-           	
-          }   
-        });
-      });
+      
+        
+        $(function() {
+      	  
+      	  
+            $("form[name='signupform']").validate({
+              
+            	  rules: {
+                      email: {required:true,email:true},     
+          	        username:{required:true,minlength:2,maxlength:15},
+          	        password:{required:true,minlength:8,maxlength:15,pswcheck:true},
+          	        phone:{required:true,phoneIND:true},
+          	        confirmPassword:{required:true,equalTo: "#password"}
+                    
+                    
+                    },
+                    messages: {
+                  	  
+                  	  
+                      email: {required:"Please enter your email",email:"Please enter vaild email"},
+                       password: {required:"please enter your password",pswcheck:"minmum 1 lowercase,1 uppercase,1 special character,1 digit",
+                      	 minlength:"minimum password lenght must be 8",maxlength:"maximum password length must be 15"},
+                     	username: {minlength:"username must be greater than two digit",required:"Please enter your username"},
+                     	confirmPassword:{required:"Please enter confirm password",equalTo:"Password did'nt match"},
+                     	phone:{required:"please enter phone number",phoneIND:"Enter valid phone number"}
+                     	
+                    }   
+            });
+          });
+     
        </script>
 
 </body>

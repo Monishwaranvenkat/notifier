@@ -26,10 +26,15 @@
          root
       </property>
       
-     <property name="hibernate.hbm2ddl.auto">create-drop</property>
+     <property name="hibernate.hbm2ddl.auto">update</property>
      
       
      <mapping class="com.example.demo.model.User"/>
+     <mapping class="com.example.demo.model.NoteBook"/>
+     <mapping class="com.example.demo.model.Note"/>
+     <mapping class="com.example.demo.model.Tag"/>
+     <mapping class="com.example.demo.model.Status"/>
+      
       
    </session-factory>
 </hibernate-configuration>

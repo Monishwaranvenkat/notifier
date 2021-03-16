@@ -22,7 +22,7 @@ public class Status implements Serializable {
 		private String statusName;
 		
 
-		Status(){
+		public Status(){
 			
 		}
 		public Status(Integer id, String statusName) {

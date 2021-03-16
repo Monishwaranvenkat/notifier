@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
          {
         	 
              request.setAttribute("errMessage", "Username or password incorrect"); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
-             request.getRequestDispatcher("/login.jsp").forward(request, response);//forwarding the request
+             request.getRequestDispatcher("/index.jsp").forward(request, response);//forwarding the request
          }
     }
     
@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
     
     public void  doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	request.getRequestDispatcher("/login.jsp").forward(request, response);
+    	request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
     
    
