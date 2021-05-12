@@ -17,28 +17,21 @@ public class SignupServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  
- 
+    	String userName = request.getParameter("username");
+    	String mobileNumber = request.getParameter("phone");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        
-      
-        
-       /* UserDAO userdao =new UserDAO();
-        User user = userdao.authUser(email,password);
- 
-        if(user!=null)
-         {
-        	HttpSession s=request.getSession();
+        User user = new User(userName, password, email, mobileNumber);
+        UserDAO userDAO = new UserDAO();  
+        User userObj=userDAO.getUserObj(email);
+		if(userObj!=null) {
 			
-			s.setAttribute("userobj", user);
-        	response.sendRedirect("/notebook");
-         }
-         else
-         {
-        	 
-             request.setAttribute("errMessage", "Username or password incorrect"); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
-             request.getRequestDispatcher("/signup.jsp").forward(request, response);//forwarding the request
-         }*/
+			request.setAttribute("errMessage","Email already exist please login to continue" );
+		}
+		else
+		{
+         	userDAO.createUser(user); 
+		}
     	request.getRequestDispatcher("/signup.jsp").forward(request, response);
     }
     
@@ -46,6 +39,7 @@ public class SignupServlet extends HttpServlet {
     
     public void  doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+    	
     	request.getRequestDispatcher("/signup.jsp").forward(request, response);
     }
     

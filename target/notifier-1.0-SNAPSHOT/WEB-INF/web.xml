@@ -17,13 +17,25 @@
     
     <servlet>
         <servlet-name>SignupServlet</servlet-name>
-         <servlet-class> com.example.demo.servlet.LoginServlet</servlet-class>
+         <servlet-class> com.example.demo.servlet.SignupServlet</servlet-class>
     </servlet>
     <!--mapping-->
     <servlet-mapping>
         <servlet-name>SignupServlet</servlet-name>
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
+    
+    
+      <servlet>
+        <servlet-name>EditUserServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.EditUserServlet</servlet-class>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>EditUserServlet</servlet-name>
+        <url-pattern>/edituser</url-pattern>
+    </servlet-mapping>
+    
     
     <servlet>
         <servlet-name>loginServlet</servlet-name>
@@ -165,6 +177,19 @@
         <url-pattern>/deletenote</url-pattern>
     </servlet-mapping>
     
+    
+     <servlet>
+        <servlet-name>AllNoteServlet</servlet-name>
+         <servlet-class> com.example.demo.servlet.AllNotesServlet</servlet-class>
+    </servlet>
+    
+  
+    <servlet-mapping>
+        <servlet-name>AllNoteServlet</servlet-name>
+        <url-pattern>/allnotes</url-pattern>
+    </servlet-mapping>
+    
+   
     
     
     

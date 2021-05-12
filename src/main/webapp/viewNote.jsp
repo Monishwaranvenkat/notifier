@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Dark Bootstrap Admin by Bootstrapious.com</title>
+  <title>Notifier</title>
   <link rel="shortcut icon" href="img/favicon.ico">
 
 
@@ -133,7 +133,8 @@ if(session.getAttribute("userobj")==null){
                     <br/>
                     <br/>
                     
-                    <a href="/note" class="btn btn-success">Back</a>
+                   
+                    <a href="javascript:history.back()" class="btn btn-success">Back</a>
 
 				
       </div>

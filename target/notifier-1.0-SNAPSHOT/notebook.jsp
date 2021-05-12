@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@page import="com.example.demo.model.*"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Dark Bootstrap Admin by Bootstrapious.com</title>
+  <title>Notifier</title>
   <link rel="shortcut icon" href="img/favicon.ico">
 
 
@@ -77,15 +77,18 @@ if(session.getAttribute("userobj")==null){
           <div class="list-inline-item dropdown">
             <a id="navbarDropdownMenuLink1" href="#" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" class="nav-link messages-toggle">
-              <i class="fas fa-bell"></i><span class="badge dashbg-1">25</span>
+              
+              <i class="fas fa-bell"></i><span class="badge dashbg-1">${reminderList.size()}</span>
             </a>
 
             <div aria-labelledby="navbarDropdownMenuLink1" class="dropdown-menu messages">
-              <a href="#" class="dropdown-item message d-flex align-items-center">
+            <h2>Reminder</h2>
+            <c:forEach items="${reminderList}" var="item">
+              <a href="viewnote?noteid=${item.getId()}" class="dropdown-item message d-flex align-items-center">
 
-                <div class="content"> <strong class="d-block">Sara Wood</strong><span class="d-block">lorem ipsum dolor
-                    sit amit</span><small class="date d-block">10:30pm</small></div>
+                <div class="content"> <strong class="d-block">${item.getNoteName()}</strong><small class="date d-block">${item.getStartDate()}</small></div>
               </a>
+             </c:forEach>
 
             </div>
           </div>

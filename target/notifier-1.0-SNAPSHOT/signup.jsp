@@ -34,6 +34,10 @@
 
 </head>
 <body>
+
+
+
+
  <div class="login-page">
       <div class="container d-flex align-items-center">
         <div class="form-holder has-shadow">
@@ -53,7 +57,10 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <form id="signupform" name="signupform" action="/signup" class="text-left ">
+                  <form id="signupform" name="signupform" action="/signup" method="post" class="text-left ">
+                  <span><label id="login-error" class="error" for="loginform">
+                  <%=(request.getAttribute("errMessage") == null) ? "": request.getAttribute("errMessage")%>
+                  </label></span>
                   	 <div class="form-group">
                       <input id="username" type="text" name="username" class="input-material">
                       <label for="username" class="label-material">Username</label>
@@ -75,7 +82,7 @@
                       <span><label id="password-error" class="error" for="password"></label></span>
                     </div>
                      <div class="form-group">
-                      <input id="confirmPassword" type="text" name="confirmPassword" class="input-material">
+                      <input id="confirmPassword" type="password" name="confirmPassword" class="input-material">
                       <label for="confirmPassword" class="label-material">Confirm Password</label>
                       <span><label id="confirmPassword-error" class="error" for="confirmPassword"></label></span>
                     </div>

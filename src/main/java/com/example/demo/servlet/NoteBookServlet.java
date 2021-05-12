@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import com.example.demo.DAO.NoteBookDAO;
 import com.example.demo.DAO.NotesDAO;
+import com.example.demo.DAO.Notification;
+import com.example.demo.model.Note;
 import com.example.demo.model.NoteBook;
 import com.example.demo.model.User;
 
@@ -37,6 +39,9 @@ public class NoteBookServlet extends HttpServlet {
 			     notebookMap.put(nb,count);
 			}
 		 	
+		 	Notification notification = new Notification();
+		 	List<Note> reminderList =notification.getNotification(user);
+		 	request.setAttribute("reminderList", reminderList);
 		 	request.setAttribute("NoteBookList", notebookMap);
 		 	request.setAttribute("user",user);
 	    	request.getRequestDispatcher("/notebook.jsp").forward(request, response);

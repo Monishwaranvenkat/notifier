@@ -9,8 +9,9 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Dark Bootstrap Admin by Bootstrapious.com</title>
+  <title>Notifier</title>
   <link rel="shortcut icon" href="img/favicon.ico">
+
 
 
 
@@ -74,19 +75,20 @@ if(session.getAttribute("userobj")==null){
           </div>
 
 
-          <!--Message-->
-          <div class="list-inline-item dropdown">
+            <div class="list-inline-item dropdown">
             <a id="navbarDropdownMenuLink1" href="#" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false" class="nav-link messages-toggle">
-              <i class="fas fa-bell"></i><span class="badge dashbg-1">25</span>
+              <i class="fas fa-bell"></i><span class="badge dashbg-1">${reminderList.size()}</span>
             </a>
 
             <div aria-labelledby="navbarDropdownMenuLink1" class="dropdown-menu messages">
-              <a href="#" class="dropdown-item message d-flex align-items-center">
+            <h2>Reminder</h2>
+            <c:forEach items="${reminderList}" var="item">
+              <a href="viewnote?noteid=${item.getId()}" class="dropdown-item message d-flex align-items-center">
 
-                <div class="content"> <strong class="d-block">Sara Wood</strong><span class="d-block">lorem ipsum dolor
-                    sit amit</span><small class="date d-block">10:30pm</small></div>
+                <div class="content"> <strong class="d-block">${item.getNoteName()}</strong><small class="date d-block">${item.getStartDate()}</small></div>
               </a>
+             </c:forEach>
 
             </div>
           </div>
@@ -97,6 +99,9 @@ if(session.getAttribute("userobj")==null){
             <a id="logout" href="/logout" class="nav-link"> <span class="d-none d-sm-inline">Logout </span>
             <i class="fas fa-power-off"></i></a>
           </div>
+           <!-- end Log out -->
+           
+           
         </div>
       </div>
     </nav>
@@ -108,13 +113,19 @@ if(session.getAttribute("userobj")==null){
     <nav id="sidebar">
       <!-- Sidebar Header-->
       <div class="sidebar-header d-flex align-items-center">
-
+      
+		<!-- User name -->
+		
         <div class="title">
           <h1 class="h5"> <%= user.getUserName() %> </h1>
-
         </div>
+        
+        <!-- User name -->
+        
       </div>
+      
       <!-- Sidebar Navidation Menus-->
+      
       <ul class="list-unstyled">
         <li ><a href="/notebook"> <i class="fa fa-book"></i>NOTE BOOKS </a></li>
         <li class="active"><a href="/allnotes"> <i class="fa fa-sticky-note"></i>NOTES </a></li>
@@ -143,7 +154,7 @@ if(session.getAttribute("userobj")==null){
         </div>
       </div>
 
-      <!--add note book-->
+      <!--add note-->
 
       <!-- Modal Form-->
       <!-- Modal-->
@@ -162,7 +173,7 @@ if(session.getAttribute("userobj")==null){
 
 
                 <div class="form-group">
-                  <label for="notebookName" >NOTE NAME</label>                      
+                  <label for="noteName" >NOTE NAME</label>                      
                   <input type="text" placeholder="Enter note name" id="noteName" name="noteName" class="form-control">
                    <span><label id="noteName-error" class="error" for="noteName"></label></span>
                    
@@ -211,7 +222,7 @@ if(session.getAttribute("userobj")==null){
                 <div class="form-group">
                   <label for="noteDescription">Description</label>
                   <textarea placeholder="Enter description about note" id="noteDescription" name="noteDescription" class="form-control"></textarea>
-                 
+                  <span><label id="noteDescription-error" class="error" for="noteTag"></label></span>
                 </div>
 
             </div>
@@ -355,9 +366,9 @@ if(session.getAttribute("userobj")==null){
 
       </div>
 
-      <!-- end Notebook-->
+      <!-- end Note-->
       
-      <!-- Modal for edit notebook -->
+      
          
 
 
@@ -369,13 +380,74 @@ if(session.getAttribute("userobj")==null){
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/popper.js/umd/popper.min.js"> </script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery.cookie/jquery.cookie.js"> </script>
-
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery-validation/jquery.validate.min.js"></script>
-
-  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/front.js"></script>
+     <script src="${pageContext.request.contextPath}/resources/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/front.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
+    
   
   
   <script>
+  
+  
+  
+$(function() {
+	  
+	  
+      $("form[name='editnoteform']").validate({
+        
+    	  rules: {
+   		     
+      		  noteName:{required:true,minlength:2},
+      		  startDate:{required:true},
+      		endDate:{required:true},
+      		remainderDate:{required:true},
+      		noteStatus:{required:true},
+      		noteTag:{required:true},
+      		noteDescription:{required:true,minlength:2}
+
+              },
+              messages: {
+            	  noteName: {minlength:"Notebook name must be greater than two digit",required:"Please enter notebook name"},
+            	  startDate:{required:"Please enter Start date"},
+            	  endDate:required:"Please enter End date"},
+            		remainderDate:{required:"Please enter Reminder Date"},
+            		noteStatus:{required:"Please enter note status"},
+            		noteTag:{required:"Please enter note tag"},
+            		noteDescription: {minlength:"Note Description must be greater than two digit",required:"Please enter note description"},
+
+              }    
+      });
+      
+      
+      $("form[name='addnoteform']").validate({
+          
+      	  rules: {
+      		     
+      		  noteName:{required:true,minlength:2},
+      		 // startDate:{required:true},
+      		//endDate:{required:true},
+      		//remainderDate:{required:true},
+      		//noteStatus:{required:true},
+      		//noteTag:{required:true},
+      		noteDescription:{required:true,minlength:2}
+
+              },
+              messages: {
+            	  noteName: {minlength:"Notebook name must be greater than two digit",required:"Please enter notebook name"},
+            	 // startDate:{required:"Please enter Start date"},
+            	 // endDate:required:"Please enter End date"},
+            	//	remainderDate:{required:"Please enter Reminder Date"},
+            	//	noteStatus:{required:"Please enter note status"},
+            	//	noteTag:{required:"Please enter note tag"},
+            		noteDescription: {minlength:"Note Description must be greater than two digit",required:"Please enter note description"},
+
+              }   
+      });
+      
+ 
+      
+    });
+
 
 
     function searchNote() {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.example.demo.DAO.NoteBookDAO;
 import com.example.demo.DAO.NotesDAO;
+import com.example.demo.DAO.Notification;
 import com.example.demo.model.Note;
 import com.example.demo.model.NoteBook;
 import com.example.demo.model.User;
@@ -56,6 +57,10 @@ public class NoteServlet extends HttpServlet{
 		NotesDAO notesdao = new NotesDAO();
 		List<Note> notelist =notesdao.listOfNotes(id);
 		
+		Notification notification = new Notification();
+		User user=(User)session.getAttribute("userobj");
+	 	List<Note> reminderList =notification.getNotification(user);
+	 	request.setAttribute("reminderList", reminderList);
 		request.setAttribute("NoteList", notelist);
 		request.setAttribute("NoteBookId", id);
 	 	

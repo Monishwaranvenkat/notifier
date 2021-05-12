@@ -1,5 +1,6 @@
 package com.example.demo.DAO;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import com.example.demo.model.Status;
 import com.example.demo.model.Tag;
 import com.example.demo.model.User;
 
+
+@SuppressWarnings({"deprecation","unchecked"})
 public class NotesDAO {
 
 	public Integer getNumberOfNotes(NoteBook noteBook) {
@@ -135,6 +138,51 @@ public class NotesDAO {
 			session.close();
 		}
 
+	}
+	
+	public List<Note> getNotesByReminder(NoteBook noteBook,Date date)
+	{
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		try {
+				
+				Criteria criteria =session.createCriteria(Note.class);
+				criteria.add(Restrictions.eq("remainderDate", date));
+				criteria.add(Restrictions.eq("noteBook", noteBook));
+				List<Note> list = criteria.list();
+				return (ArrayList<Note>) list;
+		} catch (HibernateException e) {
+
+			e.printStackTrace();
+			return null;
+
+		} finally {
+			session.close();
+		}
+		
+	}
+	
+	
+	public ArrayList<Note> listAllNotes(User user) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try
+		{
+			Criteria criteria =session.createCriteria(Note.class);
+			criteria.createAlias("noteBook","noteBook");
+			criteria.add(Restrictions.eq("noteBook.user", user));
+			List<Note> list = criteria.list();
+			return (ArrayList<Note>) list;
+		}catch (HibernateException e) {
+
+			e.printStackTrace();
+			return null;
+
+		} finally {
+			session.close();
+		}
+		
+	
 	}
 
 }
